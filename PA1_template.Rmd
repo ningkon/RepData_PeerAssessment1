@@ -29,11 +29,7 @@ num_steps <- aggregate(activity_sub$steps, by = list(date = activity_sub$date), 
                      
 ### Histogram of the total number of steps taken each day
 ```{r plot1}
-library(ggplot2)
-
-ggplot(num_steps, aes(x = num_steps$date, y = num_steps$x)) + 
-  geom_bar(stat = "identity") + xlab("Date") + ylab("Number of steps") + 
-  theme_bw() + theme(axis.text.x = element_text(angle = 70, hjust = 1))
+hist(num_steps$x, main="Total number of steps per day for each date",xlab="Number of Steps", col="darkmagenta")
 ```
 
 
@@ -62,7 +58,7 @@ steps_summary["Median"]
 ```{r plot2}
 ave_steps <- aggregate(activity_sub$steps, by = list(interval = activity_sub$interval), FUN = mean )
 
-plot(ave_steps$interval, ave_steps$x, type = "l", ylab = "Number of steps", xlab = "5 min interval")
+plot(ave_steps$interval, ave_steps$x, type = "l", main = "Average number of steps taken, averaged across all days", ylab = "Number of steps", xlab = "5 min interval", col="darkmagenta")
 ```
 
 ### 5-minute interval with maximum number of steps
@@ -99,10 +95,7 @@ head(activity_na,5)
 ``` {r plot3}
 num_steps_na <- aggregate(activity_na$steps, by = list(date = activity_na$date), FUN = sum )
 
-ggplot(num_steps_na, aes(x = num_steps_na$date, y = num_steps_na$x)) + 
-  geom_bar(stat = "identity") + 
-  xlab("Date") + ylab("Steps") + 
-  theme_bw() + theme(axis.text.x = element_text(angle = 70, hjust = 1))
+hist(num_steps_na$x, main="Total number of steps per day for each date with NA replaced as mean",xlab="Number of Steps", col="darkmagenta")
 ```
 
 ### Summary of total number of steps taken each day for filled-in data
@@ -164,7 +157,7 @@ head(ave_steps_days,6)
 ```{r plot4}
 library(lattice)
 
-xyplot(steps~interval | factor(weekend), data = ave_steps_days, main="Steps vs Interval", xlab="5 min Interval",  ylab="Number of Steps",layout=c(1,2),type="l")
+xyplot(steps~interval | factor(weekend), data = ave_steps_days, main="Steps vs Interval for weekend vs weekday", xlab="5 min Interval",  ylab="Number of Steps",layout=c(1,2),type="l")
 ```
 
 
